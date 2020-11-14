@@ -28,6 +28,44 @@ class Hangman
     new_game
   end
 
+
+  def new_game
+    @display_answer
+
+    while @counter > 0
+      puts "#{@counter} guesses left"
+      puts "#{@display_answer} (#{@secret_word.length} letters)"
+
+      @guess = gets.chomp.downcase
+
+      if @guess == "save"
+        save
+      end
+
+      if @secret_word.include?(@guess)
+        @secret_word.chars.each_with_index do |val, index|
+          if val == @guess
+            @display_answer[index] = val
+          end
+        end
+      else
+        @wrong_guesses << guess
+      end
+
+      if guess == @secret_word || @display_answer == @secret_word
+        puts "Well done! You've craked the word!"
+        exit
+      end
+
+      @counter -= 1
+      if @counter == 0
+        puts "Sorry! You've run out of the guesses! The correct word was '#{@secret_word}'."
+        exit
+      end
+      puts "Wrong guesses so far: #{@wrong_guesses.join(", ") if @wrong_guesses.length > 0}"
+    end
+  end
+
   def save
     puts "Saving the current game..."
     sleep 1
@@ -76,44 +114,6 @@ class Hangman
   def saved_games
     puts "saved games: "
     Dir["./saved_games/*"].map{ |file| file.split('/')[-1].split('.')[0]}
-  end
-
-
-  def new_game
-    @display_answer
-
-    while @counter > 0
-      puts "#{@counter} guesses left"
-      puts "#{@display_answer} (#{@secret_word.length} letters)"
-
-      @guess = gets.chomp.downcase
-
-      if @guess == "save"
-        save
-      end
-
-      if @secret_word.include?(@guess)
-        @secret_word.chars.each_with_index do |val, index|
-          if val == @guess
-            @display_answer[index] = val
-          end
-        end
-      else
-        @wrong_guesses << guess
-      end
-
-      if guess == @secret_word || @display_answer == @secret_word
-        puts "Well done! You've craked the word!"
-        exit
-      end
-
-      @counter -= 1
-      if @counter == 0
-        puts "Sorry! You've run out of the guesses! The correct word was '#{@secret_word}'."
-        exit
-      end
-      puts "Wrong guesses so far: #{@wrong_guesses.join(", ") if @wrong_guesses.length > 0}"
-    end
   end
 end
 

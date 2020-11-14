@@ -1,0 +1,9 @@
+Garnet
+Topaz
+Opal
+Amethyst
+Ruby
+Jasper
+Pyrite
+Malachite
+Quartz
