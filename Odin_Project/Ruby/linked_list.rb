@@ -53,12 +53,11 @@ class LinkedList
     else
       @size -= 1
       tmp = @head
-      while tmp != nil do
-        prev = tmp
+      until tmp.next_node == @tail do
         tmp = tmp.next_node
       end
-      prev.next_node = nil
-      @tail = prev
+      tmp.next_node = nil
+      @tail = tmp
     end
   end
 
@@ -104,13 +103,17 @@ class LinkedList
       puts "nil"
     end
   end
+
+
+  def insert_at(value, index)
+  end
+
+  def remove_at(index)
+  end
 end
 
 list = LinkedList.new
 10.times{ list.append(Random.rand(20))}
-puts "There are #{list.size} nodes in this list."
-puts "5 in this list? >> "
-puts "#{list.find(5)}"
-puts "11 in this list? >> "
-puts "#{list.find(11)}"
-list.to_s
+p list.to_s
+list.pop
+p list.to_s
