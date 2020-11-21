@@ -1,27 +1,23 @@
-# Our game will be a garden simulator.
-# It will have an interface that asks you if you want to plant, weed, water or rest
-
-
 class Interface
   ACTIONS = {
-    'q' => :quit,
-    'p' => :plant,
-    'w' => :water,
-    'x' => :weed,
-    'r' => :rest
+    "q" => :quit,
+    "p" => :plant,
+    "w" => :water,
+    "x" => :weed,
+    "r" => :rest
   }
 
   VALID_CHOICES = ACTIONS.keys
 
   def get_valid_action
-    puts "What would you like to do? (q: quit, p: plant, w: water, w: weed, r: rest)"
+    puts "What would you like to do? (q: quit, p: plant, w: water, x: weed, r: rest)"
     validate( gets.chomp ) || try_again
   end
 
   private
 
-  def validate(action)
-    VALID_ACTIONS.detect{ |valid_action| valid_action == action }
+  def validate( action )
+    VALID_CHOICES.detect { |valid_action| valid_action == action }
   end
 
   def get_action
@@ -29,17 +25,17 @@ class Interface
   end
 
   def try_again
-    puts "Sorry, I don't understand that."
+    puts "Sorry, I didn't understand that."
     get_valid_action
   end
 end
 
 class Garden
-  attr_reader :plants, :weeds
+  attr_reader :weeds, :plants
 
   def initialize
-    @plants = 0
     @weeds = 0
+    @plants = 0
   end
 
   def grow_weeds
@@ -47,7 +43,7 @@ class Garden
   end
 
   def plant
-    @plant += 1
+    @plants += 1
   end
 
   def weed
@@ -55,7 +51,7 @@ class Garden
   end
 end
 
-def Controller
+class Controller
   def initialize(garden)
     @garden = garden
   end
@@ -110,17 +106,14 @@ class Game
     @controller.send @action
   end
 
-
   def report
     puts "There are #{@garden.plants} plants in your garden and #{@garden.weeds} weeds."
   end
 
-
   def grow_weeds
     @garden.grow_weeds
-    puts "Some new weeds have grown"
+    puts "A new weed has grown"
   end
 end
-
 
 Game.new.play
